@@ -27,6 +27,11 @@ pub(crate) fn create_schema(conn: &Connection) {
             )",
             (), // empty list of parameters.
         ).expect("Failed to create table: kv");
+
+        conn.execute(
+            "create index kv_key_index on kv (key);",
+            (),
+        ).expect("Failed to create index: idx_key");
     }
 }
 
@@ -86,12 +91,12 @@ mod tests {
 
         create_schema(&conn);
 
-        put_data(&conn, "name", "{ 'hi': 'world' }").unwrap();
-        put_data(&conn, "key1", "{ 'goodbye': 'cruel world' }").unwrap();
+        put_data(&conn, "name", "{ \"name\": \"eric\" }").unwrap();
+        put_data(&conn, "key1", "{ \"goodbye\": \"cruel world\" }").unwrap();
 
         let value = get_data(&conn, "name").unwrap();
 
-        assert_eq!(value, "{ 'hi': 'world' }");
+        assert_eq!(value, "{ \"name\": \"eric\" }");
 
         conn.close().unwrap();
     }

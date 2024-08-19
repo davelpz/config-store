@@ -78,7 +78,28 @@ pub(crate) fn get_data(conn: &Connection, key: &str) -> Option<String> {
     Some(data)
 }
 
+pub(crate) fn delete_data(conn: &Connection, key: &str) -> Result<usize> {
+    conn.execute(
+        "DELETE FROM kv WHERE key = ?1",
+        &[&key],
+    )
+}
 
+pub(crate) fn get_all_keys(conn: &Connection) -> Vec<String> {
+    let mut stmt = conn.prepare("SELECT key FROM kv").unwrap();
+    let rows = stmt.query_map([], |row| {
+        row.get(0)
+    }).expect("Failed to query keys");
+    rows.filter_map(Result::ok).collect()
+}
+
+pub(crate) fn count_keys(conn: &Connection) -> usize {
+    let mut stmt = conn.prepare("SELECT count(*) FROM kv").unwrap();
+    let count: usize = stmt.query_row([], |row| {
+        row.get(0)
+    }).expect("Failed to count keys");
+    count
+}
 
 #[cfg(test)]
 mod tests {

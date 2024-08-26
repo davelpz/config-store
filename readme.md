@@ -3,13 +3,13 @@
 A simple key-value store microservice built using the Rocket web framework, SQLite for storage, and `r2d2` for database connection pooling. This service allows storing, retrieving, updating, and deleting JSON data using keys. 
 
 ## Features
-- **GET /<key>**: Retrieve the value associated with a key. 
-- **POST /<key>**: Store JSON data under a key. 
-- **PUT /<key>**: Update the data under a key. 
-- **DELETE /<key>**: Remove a key and its associated value. 
-- **HEAD /<key>**: Check if a key exists without retrieving the value. 
-- **GET /keys**: List all keys stored in the database. 
-- **GET /count**: Count the number of stored keys. 
+- **GET /config/\<env>/\<app>**: Retrieve the config data for a given environment and application.  
+- **POST /config/\<env>/\<app>**: Store JSON config data for a given environment and application.
+- **PUT /config/\<env>/\<app>**: Update the config data for a given environment and application.
+- **DELETE /config/\<env>/\<app>**: Remove the config data for a given environment and application.
+- **HEAD /config/\<env>/\<app>**: Check if a config exists for a given environment and application.
+- **GET /keys**: List all the config keys stored in the database.
+- **GET /count**: Count the number of config keys stored in the database.
  
 ## Installation
 1. **Clone the repository:**
@@ -31,29 +31,29 @@ The service will start on http://localhost:8000
 
 ## API Usage
 1. **Get Data**
-Retrieve the value associated with a key.
+Retrieve the JSON config data for a given environment and application.
 ```bash
-curl http://localhost:8000/<key>
+curl http://localhost:8000/config/<env>/<app>
 ```
 2. **Store Data(POST)**
-Store JSON data under a key.
+Store JSON config data for a given environment and application.
 ```bash
-curl -X POST -H "Content-Type: application/json" -d '{"key": "value"}' http://localhost:8000/<key>
+curl -X POST -H "Content-Type: application/json" -d '{"key": "value"}' http://localhost:8000/config/<env>/<app>
 ```
 3. **Update Data(PUT)**
-Update the data under a key (same as POST).
+Update the JSON config data for a given environment and application.
 ```bash
-curl -X PUT -H "Content-Type: application/json" -d '{"key": "value"}' http://localhost:8000/<key>
+curl -X PUT -H "Content-Type: application/json" -d '{"key": "value"}' http://localhost:8000/config/<env>/<app>
 ```
 4. **Delete Data**
-Remove a key and its associated value.
+Remove the JSON config data for a given environment and application.
 ```bash
-curl -X DELETE http://localhost:8000/<key>
+curl -X DELETE http://localhost:8000/config/<env>/<app>
 ```
 5. **Check if Key Exists**
-Check if a key exists without retrieving the value.
+Check if a config exists for a given environment and application.
 ```bash
-curl -I http://localhost:8000/<key>
+curl -I http://localhost:8000/config/<env>/<app>
 ```
 6. **List All Keys**
 Retrieve a list of all keys in the database.

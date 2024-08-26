@@ -112,10 +112,10 @@ mod tests {
 
         create_schema(&conn);
 
-        put_data(&conn, "name", "{ \"name\": \"eric\" }").unwrap();
-        put_data(&conn, "key1", "{ \"goodbye\": \"cruel world\" }").unwrap();
+        put_data(&conn, "dev/app1", "{ \"name\": \"eric\" }").unwrap();
+        put_data(&conn, "dev/app2", "{ \"goodbye\": \"cruel world\" }").unwrap();
 
-        let value = get_data(&conn, "name").unwrap();
+        let value = get_data(&conn, "dev/app1").unwrap();
 
         assert_eq!(value, "{ \"name\": \"eric\" }");
 
